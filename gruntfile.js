@@ -21,14 +21,14 @@ module.exports = function(grunt){
 			uglify: {
 			    build: {
 			        files: {
-			            'build/js/base.min.js': ['assets/js/base.js']
+			            'build/js/base.min.js': ['src/js/base.js']
 			        }
 			    }
 			},
 			sass: {
 			    build: {
 			        files: {
-			            'build/css/master.css': 'assets/sass/master.scss'
+			            'build/css/master.css': 'src/sass/master.scss'
 			        }
 			    }
 			},
@@ -39,36 +39,44 @@ module.exports = function(grunt){
                 pretty: true
             },
             files: [ {
-              cwd: "assets/templates",
-              src: "**/*.jade",
-              dest: "build/templates",
+              cwd: "src",
+              src: ['**/*.jade','!bootstrap-jade/**'],
+              dest: "build",
               expand: true,
               ext: ".html"
             } ]
         }
     	},
+			browserSync: {
+			    bsFiles: {
+			        src : '**/*.html'
+			    },
+			    options: {
+							watchTask: true,
+			        server: {
+			            baseDir: "build"
+			        }
+			    }
+			},
 			watch: {
 					jade: {
-						files: ['assets/templates/*.jade'],
+						files: ['src/**/*.jade'],
 						tasks: ['jade']
 					},
-			    html: {
-			        files: ['index.html'],
-			        tasks: ['htmlhint']
-			    },
 					js: {
-			        files: ['assets/js/base.js'],
+			        files: ['src/js/base.js'],
 			        tasks: ['uglify']
 			    },
 					css: {
-			        files: ['assets/sass/**/*.scss'],
+			        files: ['src/sass/**/*.scss'],
 			        tasks: ['buildcss']
 			    }
 			}
   });
 
-  grunt.registerTask('default', []);
-	grunt.registerTask('buildcss',  ['sass', 'cssc', 'cssmin']);
+  grunt.registerTask('default', ['browserSync', 'watch']);
+	grunt.registerTask('buildcss',  ['sass']);
 	grunt.loadNpmTasks('grunt-contrib-jade');
+	grunt.loadNpmTasks('grunt-browser-sync');
 
 };

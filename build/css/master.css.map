@@ -1,7 +1,7 @@
 {
 "version": 3,
-"mappings": "",
-"sources": [],
+"mappings": "AAAA,KAAM;EACJ,KAAK,EAAE,KAAK",
+"sources": ["../../src/assets/sass/partials/_variables.scss"],
 "names": [],
 "file": "master.css"
 }
